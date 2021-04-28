@@ -2,10 +2,17 @@ import Deck from "./Deck";
 
 function Decks() {
   return (
-    <>
-      <h1>Decks is rendering</h1>
+    <div>
+      <button type="button" className="btn btn-secondary">
+        + Create Deck
+      </button>
+
+      {/*       <div className="card-deck"> */}
       <Deck />
-    </>
+      <Deck />
+      <Deck />
+    </div>
+    /*     </div> */
   );
 }
 
