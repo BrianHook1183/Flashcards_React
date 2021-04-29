@@ -1,16 +1,12 @@
 import React from "react";
 import DeckOptions from "./DeckOptions";
 
-function Deck() {
+function Deck({ id, name, description }) {
   return (
-    <div className="card">
+    <div className="card" key={id}>
       <div className="card-body">
-        <h5 className="card-title">Deck Title</h5>
-        <p className="card-text">
-          This is the description of a single deck of flashcards. This is the
-          description of a single deck of flashcards. This is the description of
-          a single deck of flashcards.
-        </p>
+        <h5 className="card-title">{name}</h5>
+        <p className="card-text">{description}</p>
         <DeckOptions />
       </div>
     </div>
