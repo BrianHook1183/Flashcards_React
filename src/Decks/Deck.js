@@ -1,3 +1,4 @@
+import React from "react";
 import DeckOptions from "./DeckOptions";
 
 function Deck() {
