@@ -2,15 +2,34 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-function DeckOptions() {
-  // TODO needs to read route params
+function DeckOptions({ id }) {
   const { deckId } = useParams();
+  let buttonView = null;
+  let buttonEdit = null;
+  let buttonAddCards = null;
 
-  const addCards = deckId ? (
-    <button type="button" className="btn btn-primary ml-2">
-      + Add Cards
-    </button>
-  ) : null;
+  if (deckId) {
+    buttonEdit = (
+      <Link to={`/decks/${deckId}/edit`}>
+        <button type="button" className="btn btn-secondary mr-2">
+          Edit
+        </button>
+      </Link>
+    );
+    buttonAddCards = (
+      <button type="button" className="btn btn-primary ml-2">
+        + Add Cards
+      </button>
+    );
+  } else {
+    buttonView = (
+      <Link to={`/decks/${id}`}>
+        <button type="button" className="btn btn-secondary mr-2">
+          View
+        </button>
+      </Link>
+    );
+  }
 
   return (
     <div
@@ -19,15 +38,14 @@ function DeckOptions() {
       aria-label="Deck Options"
     >
       <div className="btn-group" role="group" aria-label="View/Study group">
-        <Link to="/decks/5">
-          <button type="button" className="btn btn-secondary mr-2">
-            View
-          </button>
-        </Link>
+        {buttonView}
+        {buttonEdit}
+
         <button type="button" className="btn btn-primary">
           Study
         </button>
-        {addCards} deckId is: {deckId}
+
+        {buttonAddCards}
       </div>
       <div className="btn-group" role="group" aria-label="Delete group">
         <button type="button" className="btn btn-danger">
