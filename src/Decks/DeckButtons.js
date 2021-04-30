@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-function DeckOptions({ id }) {
+function DeckButtons({ id }) {
   const { deckId } = useParams();
   let buttonView = null;
   let buttonEdit = null;
@@ -56,4 +56,4 @@ function DeckOptions({ id }) {
   );
 }
 
-export default DeckOptions;
+export default DeckButtons;
