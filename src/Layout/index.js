@@ -5,6 +5,7 @@ import Header from "./Header";
 import NotFound from "./NotFound";
 import DeckView from "../Decks/DeckView";
 import Decks from "../Decks/Decks";
+import FormDeck from "../Forms/FormDeck";
 import FormCard from "../Forms/FormCard";
 
 function Layout() {
@@ -29,6 +30,9 @@ function Layout() {
           </Route>
           <Route path="/decks/:deckId/cards/:cardId/edit">
             <FormCard />
+          </Route>
+          <Route path="/decks/:deckId/edit">
+            <FormDeck />
           </Route>
           <Route path="/decks/:deckId">
             <DeckView />
