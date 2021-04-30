@@ -5,6 +5,7 @@ import Header from "./Header";
 import NotFound from "./NotFound";
 import Deck from "../Decks/Deck";
 import Decks from "../Decks/Decks";
+import CardList from "../Cards/CardList";
 
 function Layout() {
   const [flashDecks, setFlashDecks] = useState([]);
@@ -28,6 +29,7 @@ function Layout() {
           </Route>
           <Route path="/decks/:deckId">
             <Deck />
+            <CardList />
           </Route>
           <Route>
             <NotFound />
