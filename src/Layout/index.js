@@ -5,6 +5,7 @@ import Header from "./Header";
 import NotFound from "./NotFound";
 import DeckView from "../Decks/DeckView";
 import Decks from "../Decks/Decks";
+import FormCard from "../Forms/FormCard";
 
 function Layout() {
   const [flashDecks, setFlashDecks] = useState([]);
@@ -25,6 +26,9 @@ function Layout() {
         <Switch>
           <Route exact={true} path="/">
             <Decks decks={flashDecks} />
+          </Route>
+          <Route path="/decks/:deckId/cards/:cardId/edit">
+            <FormCard />
           </Route>
           <Route path="/decks/:deckId">
             <DeckView />
