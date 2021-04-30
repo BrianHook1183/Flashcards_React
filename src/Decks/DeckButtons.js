@@ -35,7 +35,7 @@ function DeckButtons({ id }) {
     <div
       className="btn-toolbar justify-content-between"
       role="toolbar"
-      aria-label="Deck Options"
+      aria-label="Deck Buttons"
     >
       <div className="btn-group" role="group" aria-label="View/Study group">
         {buttonView}
