@@ -6,7 +6,7 @@ import CardList from "../Cards/CardList";
 import FormDeck from "../Forms/FormDeck";
 import NotFound from "../Layout/NotFound";
 
-function DeckView() {
+function DeckView({ handleDelete }) {
   const { deckId } = useParams();
 
   const [flashDeck, setFlashDeck] = useState([]);
@@ -61,7 +61,7 @@ function DeckView() {
         <div className="mb-4" key={id}>
           <h5>{name}</h5>
           <p>{description}</p>
-          <DeckButtons id={id} />
+          <DeckButtons id={id} handleDelete={handleDelete} />
         </div>
         <CardList cards={cards} />
       </div>

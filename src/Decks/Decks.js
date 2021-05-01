@@ -1,11 +1,11 @@
 import React from "react";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link, useHistory } from "react-router-dom";
 import DeckView from "./DeckView";
 import FormDeck from "../Forms/FormDeck";
 import Deck from "./Deck";
 import NotFound from "../Layout/NotFound";
 
-function Decks({ decks }) {
+function Decks({ decks, handleDelete }) {
   const deckList = decks.map((deck) => {
     return (
       <Deck
@@ -13,6 +13,7 @@ function Decks({ decks }) {
         id={deck.id}
         name={deck.name}
         description={deck.description}
+        handleDelete={handleDelete}
       />
     );
   });
@@ -45,7 +46,7 @@ function Decks({ decks }) {
         </Route>
 
         <Route path={["/decks/:deckId", "/decks/:deckId/edit"]}>
-          <DeckView />
+          <DeckView handleDelete={handleDelete} />
         </Route>
 
         <Route>
