@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Deck from "./Deck";
 
 function Decks({ decks }) {
@@ -15,9 +16,11 @@ function Decks({ decks }) {
 
   return (
     <div>
-      <button type="button" className="btn btn-secondary">
-        + Create Deck
-      </button>
+      <Link to="/decks/new">
+        <button type="button" className="btn btn-secondary">
+          + Create Deck
+        </button>
+      </Link>
 
       {/*       <div className="card-deck"> */}
       {displayDecks}

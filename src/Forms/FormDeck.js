@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 
 function FormDeck() {
   const initialFormState = {
@@ -20,7 +20,8 @@ function FormDeck() {
     setFormData({ ...initialFormState });
   };
   const { deckId } = useParams();
-  const breadcrumb = (
+  const history = useHistory();
+  const breadcrumbEdit = (
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb">
         <li className="breadcrumb-item">
@@ -31,6 +32,18 @@ function FormDeck() {
         </li>
         <li className="breadcrumb-item active" aria-current="page">
           Edit Deck
+        </li>
+      </ol>
+    </nav>
+  );
+  const breadcrumbNew = (
+    <nav aria-label="breadcrumb">
+      <ol className="breadcrumb">
+        <li className="breadcrumb-item">
+          <Link to="/">Home</Link>
+        </li>
+        <li className="breadcrumb-item active" aria-current="page">
+          Create Deck
         </li>
       </ol>
     </nav>
@@ -62,11 +75,13 @@ function FormDeck() {
             value={formData.deckDescription}
           ></textarea>
         </div>
-        <Link to={`/decks/${deckId}`}>
-          <button type="button" className="btn btn-secondary mr-2">
-            Cancel
-          </button>
-        </Link>
+        <button
+          type="button"
+          onClick={() => history.goBack()}
+          className="btn btn-secondary mr-2"
+        >
+          Cancel
+        </button>
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
@@ -76,7 +91,7 @@ function FormDeck() {
 
   return (
     <div>
-      {breadcrumb}
+      {deckId ? breadcrumbEdit : breadcrumbNew}
       {form}
     </div>
   );
