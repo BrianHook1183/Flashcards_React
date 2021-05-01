@@ -1,9 +1,7 @@
-// import React, { useState, useEffect } from "react";
 import React from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import DeckView from "./DeckView";
 import FormDeck from "../Forms/FormDeck";
-// import FormCard from "../Forms/FormCard";
 import Deck from "./Deck";
 import NotFound from "../Layout/NotFound";
 
@@ -41,12 +39,15 @@ function Decks({ decks }) {
         <Route exact={true} path="/">
           <DisplayDecks decks={deckList} />
         </Route>
+
+        <Route path="/decks/new">
+          <FormDeck edit={false} />
+        </Route>
+
         <Route path={["/decks/:deckId", "/decks/:deckId/edit"]}>
           <DeckView />
         </Route>
-        <Route path={"/decks/new"}>
-          <FormDeck mode="create" />
-        </Route>
+
         <Route>
           <NotFound />
         </Route>
