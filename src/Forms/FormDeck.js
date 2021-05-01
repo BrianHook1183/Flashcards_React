@@ -2,11 +2,20 @@ import React, { useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 
 function FormDeck() {
+  const { deckId } = useParams();
+  const history = useHistory();
+
+  //* determines if form should be in New or Edit mode
+  const editForm = deckId ? true : false;
+
   const initialFormState = {
     deckName: "",
     deckDescription: "",
   };
   const [formData, setFormData] = useState({ ...initialFormState });
+
+  //TODO if editForm=true, then api call to readDeck and then setFormData
+
   const handleChange = ({ target }) => {
     setFormData({
       ...formData,
@@ -18,38 +27,34 @@ function FormDeck() {
     event.preventDefault();
     console.log("Submitted:", formData);
     setFormData({ ...initialFormState });
+    //todo run api set
+    //todo push deckId into useHistory
   };
-  const { deckId } = useParams();
-  const history = useHistory();
-  const breadcrumbEdit = (
+
+  //TODO replace with actual name of deck in breadcrumb path
+  let deckIdCrumb = null;
+  if (editForm) {
+    deckIdCrumb = (
+      <li className="breadcrumb-item">
+        <Link to={`/decks/${deckId}`}>Name of Deck {deckId}</Link>
+      </li>
+    );
+  }
+
+  const breadcrumb = (
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb">
         <li className="breadcrumb-item">
           <Link to="/">Home</Link>
         </li>
-        <li className="breadcrumb-item">
-          <Link to={`/decks/${deckId}`}>Name of Deck {deckId}</Link>
-        </li>
+        {deckIdCrumb}
         <li className="breadcrumb-item active" aria-current="page">
-          Edit Deck
-        </li>
-      </ol>
-    </nav>
-  );
-  const breadcrumbNew = (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="breadcrumb-item active" aria-current="page">
-          Create Deck
+          {editForm ? "Edit" : "Create"} Deck
         </li>
       </ol>
     </nav>
   );
 
-  //TODO replace with actual name of deck in breadcrumb path
   const form = (
     <div>
       <form onSubmit={handleSubmit}>
@@ -91,7 +96,7 @@ function FormDeck() {
 
   return (
     <div>
-      {deckId ? breadcrumbEdit : breadcrumbNew}
+      {breadcrumb}
       {form}
     </div>
   );
