@@ -1,9 +1,14 @@
+// import React, { useState, useEffect } from "react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
+import DeckView from "./DeckView";
+import FormDeck from "../Forms/FormDeck";
+// import FormCard from "../Forms/FormCard";
 import Deck from "./Deck";
+import NotFound from "../Layout/NotFound";
 
 function Decks({ decks }) {
-  const displayDecks = decks.map((deck) => {
+  const deckList = decks.map((deck) => {
     return (
       <Deck
         key={deck.id}
@@ -14,18 +19,39 @@ function Decks({ decks }) {
     );
   });
 
-  return (
-    <div>
-      <Link to="/decks/new">
-        <button type="button" className="btn btn-secondary">
-          + Create Deck
-        </button>
-      </Link>
+  function DisplayDecks({ decks }) {
+    return (
+      <div>
+        <Link to="/decks/new">
+          <button type="button" className="btn btn-secondary">
+            + Create Deck
+          </button>
+        </Link>
 
-      {/*       <div className="card-deck"> */}
-      {displayDecks}
+        {/*       <div className="card-deck"> */}
+        {decks}
+      </div>
+      /*     </div> */
+    );
+  }
+
+  return (
+    <div className="container">
+      <Switch>
+        <Route exact={true} path="/">
+          <DisplayDecks decks={deckList} />
+        </Route>
+        <Route path={["/decks/:deckId", "/decks/:deckId/edit"]}>
+          <DeckView />
+        </Route>
+        <Route path={"/decks/new"}>
+          <FormDeck mode="create" />
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
     </div>
-    /*     </div> */
   );
 }
 

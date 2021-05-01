@@ -1,23 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
-import { readDeck, updateDeck } from "../utils/api/index";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { updateDeck } from "../utils/api/index";
 
-function FormDeck() {
-  const { deckId } = useParams();
+function FormDeck({ edit, deck, setFlashDeck }) {
+  //* edit is a boolean. false means create new
+  const { id, name, description } = deck;
   const history = useHistory();
 
-  //* determines if form should be in New or Edit mode
-  const editForm = deckId ? true : false;
+let initialFormState = null;
 
-  const initialFormState = {
-    name: "",
-    ogName: "",
-    description: "",
-  };
-  const [formData, setFormData] = useState({ ...initialFormState });
-  const { id, name, ogName, description } = formData;
+  if (id) {
+    initialFormState = {
+      id: id,
+      name: name,
+      ogName: name,
+      description: description,
+    };
+  } else {
+    initialFormState = {
+      id: "",
+      name: "",
+      ogName: "",
+      description: "",
+    };
+  }
 
-  useEffect(() => {
+  console.log("initialFormState", initialFormState);
+
+  const [formData, setFormData] = useState(initialFormState);
+
+  // if (id) {
+  //   setFormData({
+  //     id: id,
+  //     name: name,
+  //     ogName: name,
+  //     description: description,
+  //   });
+  // }
+
+  /*   useEffect(() => {
     async function getFlashDeck() {
       const flashDeckFromApi = await readDeck(deckId);
       console.log(`FormDeck getting deck ${deckId}`, flashDeckFromApi);
@@ -30,7 +51,7 @@ function FormDeck() {
       });
     }
     getFlashDeck();
-  }, [deckId]);
+  }, [deckId]); */
 
   const handleChange = ({ target }) => {
     setFormData({
@@ -39,28 +60,49 @@ function FormDeck() {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Submitted:", formData);
-    setFormData({ ...initialFormState });
-    updateDeck({
-      id: id,
-      name: name,
-      description: description,
-    });
-    //todo if new deck, need to get deckId somehow
-    editForm ? history.goBack() : history.push(`/decks/${deckId}`);
-  };
+
+
+
+    async function handleSubmit(event)  {
+      event.preventDefault();
+      console.log("Submitted:", formData);
+      await updateDeck({
+        id: formData.id,
+        name: formData.name,
+        description: formData.description,
+      });
+      await setFlashDeck({
+        id: formData.id,
+        name: formData.name,
+        description: formData.description,
+      });
+      // setFormData({ ...initialFormState });
+      history.goBack();
+    }
+
+/*     async function handleSubmit(event)  {
+      event.preventDefault();
+      console.log("Submitted:", formData);
+      setFormData({ ...initialFormState });
+      await updateDeck({
+        ...deck,
+        id: formData.id,
+        name: formData.name,
+        description: formData.description,
+      });
+      //todo if new deck, need to get deckId somehow
+      // history.push(`/decks/${deckId}`);
+    }; */
+
 
   let deckIdCrumb = null;
-  if (editForm) {
+  if (edit) {
     deckIdCrumb = (
       <li className="breadcrumb-item">
-        <Link to={`/decks/${deckId}`}>{ogName}</Link>
+        <Link to={`/decks/${id}`}>{formData.ogName}</Link>
       </li>
     );
   }
-
   const breadcrumb = (
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb">
@@ -69,7 +111,7 @@ function FormDeck() {
         </li>
         {deckIdCrumb}
         <li className="breadcrumb-item active" aria-current="page">
-          {editForm ? "Edit" : "Create"} Deck
+          {edit ? "Edit" : "Create"} Deck
         </li>
       </ol>
     </nav>
@@ -86,7 +128,7 @@ function FormDeck() {
             id="name"
             placeholder="Enter the name for the deck"
             onChange={handleChange}
-            value={name}
+            value={formData.name}
           ></input>
         </div>
         <div className="form-group">
@@ -97,7 +139,7 @@ function FormDeck() {
             id="description"
             placeholder="add a description for the deck"
             onChange={handleChange}
-            value={description}
+            value={formData.description}
           ></textarea>
         </div>
         <button
