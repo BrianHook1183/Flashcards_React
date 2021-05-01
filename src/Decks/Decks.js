@@ -1,11 +1,27 @@
 import React from "react";
 import { Route, Switch, Link, useHistory } from "react-router-dom";
+import { deleteDeck } from "../utils/api/index";
 import DeckView from "./DeckView";
 import FormDeck from "../Forms/FormDeck";
 import Deck from "./Deck";
 import NotFound from "../Layout/NotFound";
 
-function Decks({ decks, handleDelete }) {
+function Decks({ decks, setFlashDecks }) {
+  const history = useHistory();
+
+  const handleDelete = (id) => {
+    console.log("handleDelete ran with id:", id);
+    if (window.confirm("Do you really want to delete this deck?")) {
+      deleteDeck(id);
+
+      setFlashDecks((currentDecks) =>
+        currentDecks.filter((deck) => deck.id !== id)
+      );
+
+      history.push("/");
+    }
+  };
+
   const deckList = decks.map((deck) => {
     return (
       <Deck
