@@ -1,20 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
+import { readDeck } from "../utils/api/index";
 
 function FormDeck() {
-  let { deckId } = useParams();
+  const { deckId } = useParams();
   const history = useHistory();
 
   //* determines if form should be in New or Edit mode
   const editForm = deckId ? true : false;
 
   const initialFormState = {
-    deckName: "",
-    deckDescription: "",
+    name: "",
+    ogName: "",
+    description: "",
   };
   const [formData, setFormData] = useState({ ...initialFormState });
+  const { name, ogName, description } = formData;
 
-  //TODO if editForm=true, then api call to readDeck and then setFormData
+  useEffect(() => {
+    async function getFlashDeck() {
+      const flashDeckFromApi = await readDeck(deckId);
+      console.log(`FormDeck getting deck ${deckId}`, flashDeckFromApi);
+      // setFormData({...flashDeckFromApi});
+      setFormData({
+        name: flashDeckFromApi.name,
+        ogName: flashDeckFromApi.name,
+        description: flashDeckFromApi.description,
+      });
+    }
+    getFlashDeck();
+  }, [deckId]);
 
   const handleChange = ({ target }) => {
     setFormData({
@@ -32,12 +47,11 @@ function FormDeck() {
     editForm ? history.goBack() : history.push(`/decks/${deckId}`);
   };
 
-  //TODO replace with actual name of deck in breadcrumb path after api readDeck
   let deckIdCrumb = null;
   if (editForm) {
     deckIdCrumb = (
       <li className="breadcrumb-item">
-        <Link to={`/decks/${deckId}`}>Name of Deck {deckId}</Link>
+        <Link to={`/decks/${deckId}`}>{ogName}</Link>
       </li>
     );
   }
@@ -64,10 +78,10 @@ function FormDeck() {
           <input
             type="text"
             className="form-control form-control-lg"
-            id="deckName"
+            id="name"
             placeholder="Enter the name for the deck"
             onChange={handleChange}
-            value={formData.deckName}
+            value={name}
           ></input>
         </div>
         <div className="form-group">
@@ -75,10 +89,10 @@ function FormDeck() {
           <textarea
             type="text"
             className="form-control"
-            id="deckDescription"
+            id="description"
             placeholder="add a description for the deck"
             onChange={handleChange}
-            value={formData.deckDescription}
+            value={description}
           ></textarea>
         </div>
         <button
