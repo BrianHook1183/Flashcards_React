@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
-import { readDeck } from "../utils/api/index";
+import { readDeck, updateDeck } from "../utils/api/index";
 
 function FormDeck() {
   const { deckId } = useParams();
@@ -15,7 +15,7 @@ function FormDeck() {
     description: "",
   };
   const [formData, setFormData] = useState({ ...initialFormState });
-  const { name, ogName, description } = formData;
+  const { id, name, ogName, description } = formData;
 
   useEffect(() => {
     async function getFlashDeck() {
@@ -23,6 +23,7 @@ function FormDeck() {
       console.log(`FormDeck getting deck ${deckId}`, flashDeckFromApi);
       // setFormData({...flashDeckFromApi});
       setFormData({
+        id: flashDeckFromApi.id,
         name: flashDeckFromApi.name,
         ogName: flashDeckFromApi.name,
         description: flashDeckFromApi.description,
@@ -42,8 +43,12 @@ function FormDeck() {
     event.preventDefault();
     console.log("Submitted:", formData);
     setFormData({ ...initialFormState });
-    //todo run api set
-    //todo if !editForm then deckId = returned value from api
+    updateDeck({
+      id: id,
+      name: name,
+      description: description,
+    });
+    //todo if new deck, need to get deckId somehow
     editForm ? history.goBack() : history.push(`/decks/${deckId}`);
   };
 
