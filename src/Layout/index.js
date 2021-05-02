@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { listDecks } from "../utils/api/index";
 import Header from "./Header";
 import NotFound from "./NotFound";
 import Decks from "../Decks/Decks";
-// import FormCard from "../Forms/FormCard";
 
 function Layout() {
   const [flashDecks, setFlashDecks] = useState([]);
@@ -12,8 +11,8 @@ function Layout() {
   useEffect(() => {
     async function getFlashDecks() {
       const flashDecksFromApi = await listDecks();
-/** 
-* ! */console.log("LayoutIndex gettingDecks", flashDecksFromApi);
+      /**
+       * ! */ console.log("LayoutIndex gettingDecks", flashDecksFromApi);
       setFlashDecks(flashDecksFromApi);
     }
     getFlashDecks();
@@ -27,9 +26,6 @@ function Layout() {
           <Route path="/">
             <Decks decks={flashDecks} setFlashDecks={setFlashDecks} />
           </Route>
-          {/*           <Route path="/decks/:deckId/cards/:cardId/edit">
-            <FormCard />
-          </Route> */}
           <Route>
             <NotFound />
           </Route>
