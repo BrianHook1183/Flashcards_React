@@ -4,7 +4,8 @@ import { updateDeck, createDeck } from "../utils/api/index";
 
 function FormDeck({ edit = false, deck, setFlashDeck }) {
   //* edit is a boolean. false means create new
-  // console.log("edit?", edit);
+/** 
+* ! *///console.log("edit?", edit);
 
   const history = useHistory();
 
@@ -35,7 +36,8 @@ function FormDeck({ edit = false, deck, setFlashDeck }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("Submitted:", formData);
+/** 
+* ! */console.log("Submitted:", formData);
     if (edit) {
       await updateDeck({
         ...deck,
@@ -56,7 +58,8 @@ function FormDeck({ edit = false, deck, setFlashDeck }) {
         description: formData.description,
       });
       const newDeck = await response;
-      console.log("Created newDeck!", newDeck);
+/** 
+* ! */console.log("Created newDeck!", newDeck);
       history.push(`/decks/${newDeck.id}`);
     }
   }
