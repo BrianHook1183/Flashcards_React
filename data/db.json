@@ -9,6 +9,11 @@
       "id": 2,
       "name": "React Routers",
       "description": "React Router is a collection of navigational components that compose declaratively with your application."
+    },
+    {
+      "name": "Brian Hook",
+      "description": "werwerwerwerwer",
+      "id": 3
     }
   ],
   "cards": [

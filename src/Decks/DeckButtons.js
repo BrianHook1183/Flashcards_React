@@ -37,13 +37,15 @@ function DeckButtons({ id, handleDelete }) {
       role="toolbar"
       aria-label="Deck Buttons"
     >
-      <div className="btn-group" role="group" aria-label="View/Study group">
+      <div className="btn-group" role="group" aria-label="View Study Edit group">
         {buttonView}
         {buttonEdit}
 
-        <button type="button" className="btn btn-primary">
-          Study
-        </button>
+        <Link to={`/decks/${id}/study`}>
+          <button type="button" className="btn btn-primary">
+            Study
+          </button>
+        </Link>
 
         {buttonAddCards}
       </div>
