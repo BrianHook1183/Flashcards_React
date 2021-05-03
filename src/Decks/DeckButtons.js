@@ -17,9 +17,11 @@ function DeckButtons({ id, handleDelete }) {
       </Link>
     );
     buttonAddCards = (
-      <button type="button" className="btn btn-primary ml-2">
-        + Add Cards
-      </button>
+      <Link to={`/decks/${deckId}/cards/new`}>
+        <button type="button" className="btn btn-primary ml-2">
+          + Add Cards
+        </button>
+      </Link>
     );
   } else {
     buttonView = (
@@ -37,7 +39,11 @@ function DeckButtons({ id, handleDelete }) {
       role="toolbar"
       aria-label="Deck Buttons"
     >
-      <div className="btn-group" role="group" aria-label="View Study Edit group">
+      <div
+        className="btn-group"
+        role="group"
+        aria-label="View Study Edit group"
+      >
         {buttonView}
         {buttonEdit}
 

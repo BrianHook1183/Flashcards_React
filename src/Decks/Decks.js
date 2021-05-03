@@ -10,8 +10,6 @@ function Decks({ decks, setFlashDecks }) {
   const history = useHistory();
 
   const handleDelete = (id) => {
-/** 
-* ! */console.log("handleDelete ran with id:", id);
     if (window.confirm("Do you really want to delete this deck?")) {
       deleteDeck(id);
 
