@@ -1,34 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
+import CardStudy from "../Cards/CardStudy";
 
 function DeckStudy({ deck }) {
   let displayCards = "loading...";
 
-  if (deck.cards) {
-    displayCards = deck.cards.map((card) => {
-      const { id, front, back } = card;
+  const initialFlashCardState = {
+    cardNumber: 1,
+    cardFlipped: false,
+    nextButton: false,
+  };
+
+  const [flashCard, setFlashCard] = useState(initialFlashCardState);
+  const { cardNumber, cardFlipped, nextButton } = flashCard;
+
+  const handleFlip = () => {
+    setFlashCard({ ...flashCard, cardFlipped: !cardFlipped, nextButton: true });
+  };
+
+  const handleNext = () => {
+    setFlashCard({
+      ...flashCard,
+      cardNumber: cardNumber + 1,
+      cardFlipped: false,
+      nextButton: false,
+    });
+  };
+
+  if (deck) {
+    const { cards, name } = deck;
+    const totalCards = cards.length;
+
+    const flashCards = cards.map((card) => {
       return (
-        <div
-          className="card justify-content-between"
-          style={{ minWidth: "22rem" }}
-          key={id}
-        >
-          <div className="card-body">
-            <div className="row">
-              <p className="card-text">{front}</p>
-              <p className="card-text">{back}</p>
-            </div>
-          </div>
-        </div>
+        <CardStudy
+          cardNumber={cardNumber}
+          cardFlipped={cardFlipped}
+          card={card}
+          key={card.id}
+          total={totalCards}
+          handleNext={handleNext}
+          handleFlip={handleFlip}
+          nextButton={nextButton}
+        />
       );
     });
+
+    displayCards = (
+      <div>
+        <h1>{name}</h1>
+        {flashCards[cardNumber - 1]}
+      </div>
+    );
+
+    if (cardNumber > totalCards) {
+      if (window.confirm(`Restart cards?`)) {
+        setFlashCard(initialFlashCardState);
+      }
+    }
   }
 
-  return (
-    <div>
-      <h1>{deck.name}</h1>
-      <div className="card-deck">{displayCards}</div>
-    </div>
-  );
+  return displayCards;
 }
 
 export default DeckStudy;
