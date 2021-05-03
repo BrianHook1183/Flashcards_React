@@ -31,6 +31,7 @@ function DeckStudy({ deck }) {
     const totalCards = cards.length;
 
     const flashCards = cards.map((card) => {
+      //todo add flashCards to hook so map doesn't run on every component render
       return (
         <CardStudy
           cardNumber={cardNumber}
