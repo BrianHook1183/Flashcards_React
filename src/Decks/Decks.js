@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Link, useHistory } from "react-router-dom";
+import { Route, Switch, Link, useHistory, useParams } from "react-router-dom";
 import { listDecks } from "../utils/api/index";
 import { deleteDeck } from "../utils/api/index";
 import DeckView from "./DeckView";
@@ -8,6 +8,7 @@ import Deck from "./Deck";
 import NotFound from "../Layout/NotFound";
 
 function Decks() {
+  const { deckId } = useParams();
   const history = useHistory();
 
   const [flashDecks, setFlashDecks] = useState([]);
@@ -67,11 +68,11 @@ function Decks() {
     <div className="container">
       <Switch>
         <Route exact={true} path="/">
-          <DisplayDecks flashDecks={deckList} />
+          <DisplayDecks flashDecks={deckList} deckId={deckId} />
         </Route>
 
         <Route path="/decks/new">
-          <FormDeck edit={false} />
+          <FormDeck edit={false} deckId={deckId} />
         </Route>
 
         <Route path={["/decks/:deckId", "/decks/:deckId/edit"]}>

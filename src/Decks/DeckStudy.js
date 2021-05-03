@@ -1,11 +1,48 @@
-import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, Link, useParams } from "react-router-dom";
+import { readDeck } from "../utils/api/index";
 import CardStudy from "../Cards/CardStudy";
 import CardNotEnough from "../Cards/CardNotEnough";
 
-function DeckStudy({ deck }) {
-  let displayCard = "loading...";
+function DeckStudy() {
   const history = useHistory();
+  const { deckId } = useParams();
+
+  const [flashDeck, setFlashDeck] = useState();
+  // const { id, name, cards } = flashDeck;
+
+  useEffect(() => {
+    async function getCardsAndDeck() {
+      const deckFromApi = await readDeck(deckId);
+      console.log(`DeckStudy readDeck(${deckId}) ran`);
+      setFlashDeck(deckFromApi);
+    }
+    getCardsAndDeck();
+  }, [deckId]);
+
+  /*     useEffect(() => {
+    const abortController = new AbortController();
+
+    async function getFlashDeck() {
+      try {
+        const flashDeckFromApi = await readDeck(deckId);
+        console.log(
+          `DeckStudy / abort getting deck ${deckId}`,
+          flashDeckFromApi
+        );
+        setFlashDeck(flashDeckFromApi);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          // Ignore `AbortError`
+          console.log("Aborted", deckId);
+        } else {
+          throw error;
+        }
+      }
+    }
+    getFlashDeck();
+    return () => abortController.abort();
+  }, [deckId]); */
 
   const initialFlashCardState = {
     cardNumber: 1,
@@ -43,10 +80,9 @@ function DeckStudy({ deck }) {
     }
   };
 
-  const { cards, name, id } = deck;
-  const totalCards = cards?.length;
+  const totalCards = flashDeck?.cards?.length;
 
-  const flashCards = cards?.map((card) => {
+  const flashCards = flashDeck?.cards?.map((card) => {
     //todo add flashCards to hook so map doesn't run on every component render
     return (
       <CardStudy
@@ -62,36 +98,37 @@ function DeckStudy({ deck }) {
     );
   });
 
-  let displayResult = null;
-
-  if (deck.length) {
-    const notEnoughCards = <CardNotEnough total={totalCards} deckId={id} />;
-    const enoughCards = flashCards[cardNumber - 1];
-
-    displayResult = totalCards <= 2 ? notEnoughCards : enoughCards;
-
-    displayCard = (
-      <div>
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="/">Home</a>
-            </li>
-            <li className="breadcrumb-item">
-              <Link to={`/decks/${id}`}>{name}</Link>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              Study
-            </li>
-          </ol>
-        </nav>
-        <h1>{name}</h1>
-        {displayResult}
-      </div>
-    );
+  if (!flashDeck) {
+    console.log("no flashDeck Loading... ran");
+    return <p>Loading...</p>;
   }
 
-  return displayCard;
+  let displayResult = null;
+  const notEnoughCards = (
+    <CardNotEnough total={totalCards} deckId={flashDeck.id} />
+  );
+  const enoughCards = flashCards[cardNumber - 1];
+  displayResult = totalCards <= 2 ? notEnoughCards : enoughCards;
+
+  return (
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to={`/decks/${flashDeck.id}`}>{flashDeck.name}</Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Study
+          </li>
+        </ol>
+      </nav>
+      <h1>{flashDeck.name}</h1>
+      {displayResult}
+    </div>
+  );
 }
 
 export default DeckStudy;

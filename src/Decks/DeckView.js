@@ -16,8 +16,8 @@ function DeckView({ handleDelete }) {
   useEffect(() => {
     async function getFlashDeck() {
       const flashDeckFromApi = await readDeck(deckId);
-/** 
-* ! */console.log(`DeckView getting deck ${deckId}`, flashDeckFromApi);
+      /**
+       * ! */ console.log(`DeckView getting deck ${deckId}`, flashDeckFromApi);
       setFlashDeck(flashDeckFromApi);
     }
     getFlashDeck();
@@ -26,12 +26,11 @@ function DeckView({ handleDelete }) {
   // useEffect(() => {
   //   setFlashDeck({});
   //   const abortController = new AbortController();
-
   //   async function getFlashDeck() {
   //     try {
-  //       const deckFromAPI = await readDeck(deckId);
-  //       console.log(`DeckView getting deck ${deckId}`, deckFromAPI);
-  //       setFlashDeck(deckFromAPI);
+  //       const flashDeckFromApi = await readDeck(deckId);
+  //       console.log(`DeckView w/ abort getting deck ${deckId}`, flashDeckFromApi);
+  //       setFlashDeck(flashDeckFromApi);
   //     } catch (error) {
   //       if (error.name === "AbortError") {
   //         // Ignore `AbortError`
@@ -41,9 +40,7 @@ function DeckView({ handleDelete }) {
   //       }
   //     }
   //   }
-
   //   getFlashDeck();
-
   //   return () => abortController.abort();
   // }, [deckId]);
 
