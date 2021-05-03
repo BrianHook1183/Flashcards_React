@@ -28,6 +28,7 @@ function Decks({ decks, setFlashDecks }) {
         id={deck.id}
         name={deck.name}
         description={deck.description}
+        totalCards={deck.cards.length}
         handleDelete={handleDelete}
       />
     );
