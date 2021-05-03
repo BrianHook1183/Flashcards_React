@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import CardStudy from "../Cards/CardStudy";
 import CardNotEnough from "../Cards/CardNotEnough";
 
@@ -43,7 +43,7 @@ function DeckStudy({ deck }) {
     }
   };
 
-  const { cards, name } = deck;
+  const { cards, name, id } = deck;
   const totalCards = cards.length;
 
   const flashCards = cards.map((card) => {
@@ -63,13 +63,26 @@ function DeckStudy({ deck }) {
   });
 
   let displayResult = null;
-  const notEnoughCards = <CardNotEnough total={totalCards} deckId={deck.id} />;
+  const notEnoughCards = <CardNotEnough total={totalCards} deckId={id} />;
   const enoughCards = flashCards[cardNumber - 1];
 
   displayResult = totalCards <= 2 ? notEnoughCards : enoughCards;
 
   displayCard = (
     <div>
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to={`/decks/${id}`}>{name}</Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Study
+          </li>
+        </ol>
+      </nav>
       <h1>{name}</h1>
       {displayResult}
     </div>
