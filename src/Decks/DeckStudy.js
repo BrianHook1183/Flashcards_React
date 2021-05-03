@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import CardStudy from "../Cards/CardStudy";
 import CardNotEnough from "../Cards/CardNotEnough";
 
 function DeckStudy({ deck }) {
   let displayCard = "loading...";
+  const history = useHistory();
 
   const initialFlashCardState = {
     cardNumber: 1,
@@ -19,12 +21,26 @@ function DeckStudy({ deck }) {
   };
 
   const handleNext = () => {
-    setFlashCard({
-      ...flashCard,
-      cardNumber: cardNumber + 1,
-      cardFlipped: false,
-      nextButton: false,
-    });
+    // Checks for end of deck / restart
+    if (cardNumber >= totalCards && totalCards >= 3) {
+      // if user clicks "OK"
+      if (
+        window.confirm(`Restart cards? Click 'cancel' to return to homepage.`)
+      ) {
+        setFlashCard(initialFlashCardState);
+        //if user clicks "Cancel"
+      } else {
+        history.push("/");
+      }
+      // Advance to next flashcard
+    } else {
+      setFlashCard({
+        ...flashCard,
+        cardNumber: cardNumber + 1,
+        cardFlipped: false,
+        nextButton: false,
+      });
+    }
   };
 
   const { cards, name } = deck;
@@ -58,12 +74,6 @@ function DeckStudy({ deck }) {
       {displayResult}
     </div>
   );
-
-  if (cardNumber > totalCards && totalCards >= 3) {
-    if (window.confirm(`Restart cards?`)) {
-      setFlashCard(initialFlashCardState);
-    }
-  }
 
   return displayCard;
 }
