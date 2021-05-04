@@ -37,8 +37,6 @@ function DeckStudy() {
         if (error.name === "AbortError") {
           // Ignore `AbortError`
           console.log("Aborted", deckId);
-        } else {
-          throw error;
         }
       }
     }
@@ -127,7 +125,7 @@ function DeckStudy() {
           </li>
         </ol>
       </nav>
-      <h1>{flashDeck.name}</h1>
+      <h1>{flashDeck.name}: Study</h1>
       {displayResult}
     </div>
   );

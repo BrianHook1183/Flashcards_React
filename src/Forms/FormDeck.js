@@ -1,93 +1,12 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { updateDeck, createDeck } from "../utils/api/index";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-function FormDeck({ edit = false, flashDeck, setFlashDeck }) {
-  //* edit is a boolean. false means create new
-  // console.log("edit?", edit);
-  console.log(
-    edit ? "FormDeck(new) level 3 ran" : "FormDeck(edit) level 4 ran"
-  );
+function FormDeck({ existingDeck, handleFormChange, handleSubmit }) {
+  console.log("FormDeck level 4/5 ran");
 
   const history = useHistory();
 
-  let initialFormState = null;
-
-  if (edit) {
-    initialFormState = {
-      id: flashDeck.id,
-      name: flashDeck.name,
-      ogName: flashDeck.name,
-      description: flashDeck.description,
-    };
-  } else {
-    initialFormState = {
-      id: "",
-      name: "",
-      description: "",
-    };
-  }
-
-  const [formData, setFormData] = useState(initialFormState);
-
-  const handleChange = ({ target }) => {
-    setFormData({
-      ...formData,
-      [target.id]: target.value,
-    });
-  };
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    console.log("Submitted:", formData);
-    if (edit) {
-      await updateDeck({
-        ...flashDeck,
-        id: formData.id,
-        name: formData.name,
-        description: formData.description,
-      });
-      await setFlashDeck({
-        ...flashDeck,
-        id: formData.id,
-        name: formData.name,
-        description: formData.description,
-      });
-      history.goBack();
-    } else {
-      const response = await createDeck({
-        name: formData.name,
-        description: formData.description,
-      });
-      const newFlashDeck = await response;
-      console.log("Created newFlashDeck!", newFlashDeck);
-      history.push(`/decks/${newFlashDeck.id}`);
-    }
-  }
-
-  let deckIdCrumb = null;
-  if (edit) {
-    deckIdCrumb = (
-      <li className="breadcrumb-item">
-        <Link to={`/decks/${flashDeck.id}`}>{formData.ogName}</Link>
-      </li>
-    );
-  }
-  const breadcrumb = (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        {deckIdCrumb}
-        <li className="breadcrumb-item active" aria-current="page">
-          {edit ? "Edit" : "Create"} Deck
-        </li>
-      </ol>
-    </nav>
-  );
-
-  const form = (
+  return (
     <div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -97,8 +16,8 @@ function FormDeck({ edit = false, flashDeck, setFlashDeck }) {
             className="form-control form-control-lg"
             id="name"
             placeholder="Enter the name for the deck"
-            onChange={handleChange}
-            value={formData.name}
+            onChange={handleFormChange}
+            value={existingDeck.name}
           ></input>
         </div>
         <div className="form-group">
@@ -108,8 +27,8 @@ function FormDeck({ edit = false, flashDeck, setFlashDeck }) {
             className="form-control"
             id="description"
             placeholder="add a description for the deck"
-            onChange={handleChange}
-            value={formData.description}
+            onChange={handleFormChange}
+            value={existingDeck.description}
           ></textarea>
         </div>
         <button
@@ -123,13 +42,6 @@ function FormDeck({ edit = false, flashDeck, setFlashDeck }) {
           Submit
         </button>
       </form>
-    </div>
-  );
-
-  return (
-    <div>
-      {breadcrumb}
-      {form}
     </div>
   );
 }

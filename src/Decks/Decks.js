@@ -3,7 +3,9 @@ import { Route, Switch, Link, useHistory, useParams } from "react-router-dom";
 import { listDecks } from "../utils/api/index";
 import { deleteDeck } from "../utils/api/index";
 import DeckView from "./DeckView";
-import FormDeck from "../Forms/FormDeck";
+import DeckStudy from "./DeckStudy";
+import DeckEdit from "../Decks/DeckEdit";
+import DeckNew from "../Decks/DeckNew";
 import Deck from "./Deck";
 import NotFound from "../Layout/NotFound";
 
@@ -18,12 +20,11 @@ function Decks() {
   useEffect(() => {
     async function getFlashDecks() {
       const flashDecksFromApi = await listDecks();
-      /**
-       * ! */ console.log("Decks.js listDecks() API fetch", flashDecksFromApi);
+      console.log("API listDecks() in Decks component", flashDecksFromApi);
       setFlashDecks(flashDecksFromApi);
     }
     getFlashDecks();
-  }, [setFlashDecks]);
+  }, []);
 
   const handleDelete = (id) => {
     if (window.confirm("Do you really want to delete this deck?")) {
@@ -40,11 +41,11 @@ function Decks() {
   const deckList = flashDecks.map((deck) => {
     return (
       <Deck
-        key={deck.id}
-        id={deck.id}
-        name={deck.name}
-        description={deck.description}
-        totalCards={deck.cards.length}
+        key={deck?.id}
+        id={deck?.id}
+        name={deck?.name}
+        description={deck?.description}
+        totalCards={deck?.cards?.length}
         handleDelete={handleDelete}
       />
     );
@@ -74,10 +75,18 @@ function Decks() {
         </Route>
 
         <Route path="/decks/new">
-          <FormDeck edit={false} deckId={deckId} />
+          <DeckNew />
         </Route>
 
-        <Route path={["/decks/:deckId", "/decks/:deckId/edit"]}>
+        <Route path="/decks/:deckId/study">
+          <DeckStudy />
+        </Route>
+
+        <Route path={"/decks/:deckId/edit"}>
+          <DeckEdit />
+        </Route>
+
+        <Route path={"/decks/:deckId"}>
           <DeckView handleDelete={handleDelete} />
         </Route>
 
