@@ -10,6 +10,8 @@ import NotFound from "../Layout/NotFound";
 function DeckView({ handleDelete }) {
   const { deckId } = useParams();
 
+  console.log("DeckView level 3 ran");
+
   const [flashDeck, setFlashDeck] = useState([]);
   const { id, name, description, cards } = flashDeck;
 
@@ -71,7 +73,7 @@ function DeckView({ handleDelete }) {
     <div>
       <Switch>
         <Route path="/decks/:deckId/edit">
-          <FormDeck edit={true} deck={flashDeck} setFlashDeck={setFlashDeck} />
+          <FormDeck edit={true} flashDeck={flashDeck} setFlashDeck={setFlashDeck} deckId={deckId} />
         </Route>
         <Route path="/decks/:deckId/study">
           <DeckStudy deck={flashDeck} />

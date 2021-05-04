@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { updateDeck, createDeck } from "../utils/api/index";
 
-function FormDeck({ edit = false, deck, setFlashDeck }) {
+function FormDeck({ edit = false, flashDeck, setFlashDeck }) {
   //* edit is a boolean. false means create new
-/** 
-* ! *///console.log("edit?", edit);
+  // console.log("edit?", edit);
+  console.log(
+    edit ? "FormDeck(new) level 3 ran" : "FormDeck(edit) level 4 ran"
+  );
 
   const history = useHistory();
 
@@ -13,13 +15,14 @@ function FormDeck({ edit = false, deck, setFlashDeck }) {
 
   if (edit) {
     initialFormState = {
-      id: deck.id,
-      name: deck.name,
-      ogName: deck.name,
-      description: deck.description,
+      id: flashDeck.id,
+      name: flashDeck.name,
+      ogName: flashDeck.name,
+      description: flashDeck.description,
     };
   } else {
     initialFormState = {
+      id: "",
       name: "",
       description: "",
     };
@@ -36,17 +39,16 @@ function FormDeck({ edit = false, deck, setFlashDeck }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-/** 
-* ! */console.log("Submitted:", formData);
+    console.log("Submitted:", formData);
     if (edit) {
       await updateDeck({
-        ...deck,
+        ...flashDeck,
         id: formData.id,
         name: formData.name,
         description: formData.description,
       });
       await setFlashDeck({
-        ...deck,
+        ...flashDeck,
         id: formData.id,
         name: formData.name,
         description: formData.description,
@@ -57,10 +59,9 @@ function FormDeck({ edit = false, deck, setFlashDeck }) {
         name: formData.name,
         description: formData.description,
       });
-      const newDeck = await response;
-/** 
-* ! */console.log("Created newDeck!", newDeck);
-      history.push(`/decks/${newDeck.id}`);
+      const newFlashDeck = await response;
+      console.log("Created newFlashDeck!", newFlashDeck);
+      history.push(`/decks/${newFlashDeck.id}`);
     }
   }
 
@@ -68,7 +69,7 @@ function FormDeck({ edit = false, deck, setFlashDeck }) {
   if (edit) {
     deckIdCrumb = (
       <li className="breadcrumb-item">
-        <Link to={`/decks/${deck.id}`}>{formData.ogName}</Link>
+        <Link to={`/decks/${flashDeck.id}`}>{formData.ogName}</Link>
       </li>
     );
   }

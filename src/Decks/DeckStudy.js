@@ -8,6 +8,8 @@ function DeckStudy() {
   const history = useHistory();
   const { deckId } = useParams();
 
+  console.log("DeckStudy level 4 ran");
+
   const [flashDeck, setFlashDeck] = useState();
   // const { id, name, cards } = flashDeck;
 
