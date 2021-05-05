@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { readDeck } from "../utils/api/index";
+import { useParams, useHistory } from "react-router-dom";
+import { readDeck, deleteCard } from "../utils/api/index";
 import DeckButtons from "./DeckButtons";
 import CardList from "../Cards/CardList";
 
 function DeckView({ handleDelete }) {
   const { deckId } = useParams();
+  const history = useHistory();
 
   console.log("DeckView level 3 ran");
 
@@ -25,6 +26,15 @@ function DeckView({ handleDelete }) {
     }
     getFlashDeck();
   }, [deckId]);
+
+  const handleCardDelete = async (id) => {
+    if (window.confirm("Do you really want to delete this card?")) {
+      const response = await deleteCard(id);
+      if (response) {
+        history.go(0);
+      }
+    }
+  };
 
   /*   useEffect(() => {
     setFlashDeck({});
@@ -68,7 +78,7 @@ function DeckView({ handleDelete }) {
           <p>{description}</p>
           <DeckButtons id={id} handleDelete={handleDelete} />
         </div>
-        <CardList cards={cards} />
+        <CardList cards={cards} handleDelete={handleCardDelete} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 // import { useParams } from "react-router-dom";
 import CardButtons from "./CardButtons";
 
-function CardList({ cards }) {
+function CardList({ cards, handleDelete }) {
   // const { deckId } = useParams();
   let displayCards = "loading...";
 
@@ -27,7 +27,7 @@ function CardList({ cards }) {
             </div>
 
             <div className="text-right">
-              <CardButtons id={id} />
+              <CardButtons id={id} handleDelete={handleDelete} />
             </div>
           </div>
         </div>

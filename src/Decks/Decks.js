@@ -4,9 +4,11 @@ import { listDecks } from "../utils/api/index";
 import { deleteDeck } from "../utils/api/index";
 import DeckView from "./DeckView";
 import DeckStudy from "./DeckStudy";
-import DeckEdit from "../Decks/DeckEdit";
-import DeckNew from "../Decks/DeckNew";
+import DeckEdit from "./DeckEdit";
+import DeckNew from "./DeckNew";
 import Deck from "./Deck";
+import CardEdit from "../Cards/CardEdit";
+import CardNew from "../Cards/CardNew";
 import NotFound from "../Layout/NotFound";
 
 function Decks() {
@@ -74,19 +76,27 @@ function Decks() {
           <DisplayDecks flashDecks={deckList} deckId={deckId} />
         </Route>
 
-        <Route path="/decks/new">
-          <DeckNew />
+        <Route path="/decks/:deckId/cards/:cardId/edit">
+          <CardEdit />
+        </Route>
+
+        <Route path="/decks/:deckId/cards/new">
+          <CardNew />
         </Route>
 
         <Route path="/decks/:deckId/study">
           <DeckStudy />
         </Route>
 
-        <Route path={"/decks/:deckId/edit"}>
+        <Route path="/decks/:deckId/edit">
           <DeckEdit />
         </Route>
 
-        <Route path={"/decks/:deckId"}>
+        <Route path="/decks/new">
+          <DeckNew />
+        </Route>
+
+        <Route path="/decks/:deckId">
           <DeckView handleDelete={handleDelete} />
         </Route>
 

@@ -1,27 +1,50 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-function FormCard() {
-  const { cardId, deckId } = useParams();
+function FormCard({ flashCard, handleFormChange, handleSubmit }) {
+  const history = useHistory();
 
-  //TODO replace with actual name of deck in breadcrumb path
-  const breadcrumb = (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="breadcrumb-item">
-          <Link to={`/decks/${deckId}`}>Name of Deck {deckId}</Link>
-        </li>
-        <li className="breadcrumb-item active" aria-current="page">
-          Edit Card {cardId}
-        </li>
-      </ol>
-    </nav>
+  const backButton = flashCard.id ? "Cancel" : "Done";
+  const nextButton = flashCard.id ? "Submit" : "Save";
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="front">Front</label>
+          <textarea
+            type="text"
+            className="form-control"
+            id="front"
+            placeholder="Add the front of the card"
+            onChange={handleFormChange}
+            value={flashCard.front}
+          ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="back">Back</label>
+          <textarea
+            type="text"
+            className="form-control"
+            id="back"
+            placeholder="Add the back of the card"
+            onChange={handleFormChange}
+            value={flashCard.back}
+          ></textarea>
+        </div>
+        <button
+          type="button"
+          onClick={() => history.goBack()}
+          className="btn btn-secondary mr-2"
+        >
+          {backButton}
+        </button>
+        <button type="submit" className="btn btn-primary">
+          {nextButton}
+        </button>
+      </form>
+    </div>
   );
-
-  return <div>{breadcrumb}</div>;
 }
 
 export default FormCard;

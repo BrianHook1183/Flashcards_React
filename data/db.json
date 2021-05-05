@@ -11,34 +11,9 @@
       "description": "React Router is a collection of navigational components that compose declaratively with your application."
     },
     {
-      "name": "sretsertsert",
-      "description": "sertsertsertsert",
+      "name": "asdasd",
+      "description": "sdfsdf",
       "id": 3
-    },
-    {
-      "name": "sertsertsert",
-      "description": "sertsertsertsertsertsertsert",
-      "id": 4
-    },
-    {
-      "name": "test 56",
-      "description": "ertertertertert",
-      "id": 5
-    },
-    {
-      "name": "Bayern",
-      "description": "Munich",
-      "id": 6
-    },
-    {
-      "name": "rfrf",
-      "description": "rfrfrf",
-      "id": 7
-    },
-    {
-      "name": "w5t5trtd",
-      "description": "2332q4e4tw5t6r",
-      "id": 8
     }
   ],
   "cards": [
@@ -61,8 +36,8 @@
       "deckId": 1
     },
     {
-      "front": "What path will match the follow Route?\n<Route>\n  <NotFound />\n</Route>",
-      "back": "All paths. A route with no path matches all URL's",
+      "front": "gggggWhat path will match the follow Route?<Route>  <NotFound /></Route>",
+      "back": "All paths. A route with no path matches all URL'sggg",
       "deckId": 2,
       "id": 4
     },
@@ -78,6 +53,30 @@
       "back": "b",
       "deckId": 1,
       "id": 7
+    },
+    {
+      "id": 8,
+      "front": "",
+      "back": "",
+      "deckId": "3"
+    },
+    {
+      "front": "this is the ",
+      "back": "new card",
+      "deckId": 3,
+      "id": 11
+    },
+    {
+      "front": "5",
+      "back": "5",
+      "deckId": 3,
+      "id": 16
+    },
+    {
+      "front": "1",
+      "back": "1",
+      "deckId": 3,
+      "id": 17
     }
   ]
 }
