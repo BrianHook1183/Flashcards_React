@@ -4,8 +4,7 @@ import { updateDeck, readDeck } from "../utils/api/index";
 import FormDeck from "../Forms/FormDeck";
 
 function DeckEdit() {
-  console.log("DeckEdit level 4 ran");
-
+  // console.log("DeckEdit ran");
   const history = useHistory();
   const { deckId } = useParams();
 
@@ -20,9 +19,9 @@ function DeckEdit() {
   useEffect(() => {
     async function getFlashDeck() {
       try {
-        console.log(`API readDeck(${deckId}) ran`);
+        // console.log(`API readDeck(${deckId}) ran`);
         const deckFromApi = await readDeck(deckId);
-        console.log("deckFromApi", deckFromApi);
+        // console.log("deckFromApi", deckFromApi);
         setExistingDeck(deckFromApi);
       } catch (error) {
         throw new Error(`API readDeck(${deckId}) had an error: ${error}`);
@@ -40,7 +39,7 @@ function DeckEdit() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("FormDeck(edit) Submitted:", existingDeck);
+    // console.log("FormDeck(edit) Submitted:", existingDeck);
     await updateDeck({
       ...existingDeck,
       id: existingDeck.id,

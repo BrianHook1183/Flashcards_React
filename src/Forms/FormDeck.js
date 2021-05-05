@@ -2,15 +2,14 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 function FormDeck({ existingDeck, handleFormChange, handleSubmit }) {
-  console.log("FormDeck level 4/5 ran");
-
+  // console.log("FormDeck ran");
   const history = useHistory();
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="deckName">Name</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             className="form-control form-control-lg"
@@ -21,7 +20,7 @@ function FormDeck({ existingDeck, handleFormChange, handleSubmit }) {
           ></input>
         </div>
         <div className="form-group">
-          <label htmlFor="deckDescription">Description</label>
+          <label htmlFor="description">Description</label>
           <textarea
             type="text"
             className="form-control"

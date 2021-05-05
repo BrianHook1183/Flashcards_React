@@ -1,9 +1,6 @@
 import React from "react";
-// import { useParams } from "react-router-dom";
 
 function CardStudyButtons({ handleNext, handleFlip, nextButton }) {
-  // const { deckId } = useParams();
-
   let buttonFlip = (
     <button
       type="button"

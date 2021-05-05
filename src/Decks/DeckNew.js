@@ -4,8 +4,7 @@ import { createDeck } from "../utils/api/index";
 import FormDeck from "../Forms/FormDeck";
 
 function DeckNew() {
-  console.log("DeckNew level 3 ran");
-
+  // console.log("DeckNew ran");
   const history = useHistory();
 
   const formReset = {
@@ -24,7 +23,7 @@ function DeckNew() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("FormDeck(new) Submitted:", newDeck);
+    // console.log("FormDeck(new) Submitted:", newDeck);
     const response = await createDeck({
       name: newDeck.name,
       description: newDeck.description,
@@ -32,7 +31,7 @@ function DeckNew() {
     const newFlashDeck = await response;
 
     // setNewDeck(formReset);
-    console.log("Created newFlashDeck!", newFlashDeck);
+    // console.log("Created newFlashDeck!", newFlashDeck);
     history.push(`/decks/${newFlashDeck.id}`);
   }
 

@@ -42,7 +42,7 @@ function DeckButtons({ id, handleDelete }) {
       <div
         className="btn-group"
         role="group"
-        aria-label="View Study Edit group"
+        aria-label="View Study Edit Add group"
       >
         {buttonView}
         {buttonEdit}

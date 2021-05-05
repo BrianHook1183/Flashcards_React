@@ -5,17 +5,13 @@ import { Link } from "react-router-dom";
 function CardButtons({ id, handleDelete }) {
   const { deckId } = useParams();
 
-  let buttonEdit = (
-    <Link to={`/decks/${deckId}/cards/${id}/edit`}>
-      <button type="button" className="btn btn-sm btn-secondary mr-2">
-        Edit
-      </button>
-    </Link>
-  );
-
   return (
     <div className="btn-group" role="group" aria-label="Card Buttons group">
-      {buttonEdit}
+      <Link to={`/decks/${deckId}/cards/${id}/edit`}>
+        <button type="button" className="btn btn-sm btn-secondary mr-2">
+          Edit
+        </button>
+      </Link>
       <button
         type="button"
         onClick={() => handleDelete(id)}
