@@ -30,24 +30,22 @@ function DeckView({ handleDelete }) {
 
   return (
     <div>
-      <div>
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="/">Home</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              {name}
-            </li>
-          </ol>
-        </nav>
-        <div className="mb-4" key={id}>
-          <h5>{name}</h5>
-          <p>{description}</p>
-          <DeckButtons id={id} handleDelete={handleDelete} />
-        </div>
-        <CardList cards={cards} handleDelete={handleCardDelete} />
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            {name}
+          </li>
+        </ol>
+      </nav>
+      <div className="mb-4" key={id}>
+        <h5>{name}</h5>
+        <p>{description}</p>
+        <DeckButtons id={id} handleDelete={handleDelete} />
       </div>
+      <CardList cards={cards} handleDelete={handleCardDelete} />
     </div>
   );
 }

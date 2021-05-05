@@ -56,7 +56,7 @@ function Decks() {
     return (
       <div>
         <Link to="/decks/new">
-          <button type="button" className="btn btn-secondary">
+          <button type="button" className="btn btn-secondary mb-4">
             + Create Deck
           </button>
         </Link>
@@ -69,7 +69,7 @@ function Decks() {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ maxWidth: "800px", paddingBottom: "20px" }}>
       <Switch>
         <Route exact={true} path="/">
           <DisplayDecks flashDecks={deckList} deckId={deckId} />

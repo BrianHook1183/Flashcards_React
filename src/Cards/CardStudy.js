@@ -18,13 +18,11 @@ function CardStudy({
   const content = cardFlipped ? answer : question;
 
   return (
-    <div className="card" key={id}>
-      <div className="card-body">
-        <h5 className="card-title">
-          Card {cardNumber} of {total}
-        </h5>
-        {content}
-      </div>
+    <div className="card border border-info" key={id}>
+      <h5 className="card-title ml-2 mt-2 font-weight-light">
+        Card {cardNumber} of {total}
+      </h5>
+      <div className="card-text">{content}</div>
       <CardStudyButtons
         handleNext={handleNext}
         handleFlip={handleFlip}

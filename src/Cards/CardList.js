@@ -9,22 +9,21 @@ function CardList({ cards, handleDelete }) {
       const { id, front, back } = card;
       return (
         <div
-          className="card justify-content-between"
-          style={{ minWidth: "22rem" }}
+          className="card justify-content-between mb-1 border border-dark"
           key={id}
         >
-          <div className="card-body">
+          <div className="col-12">
             <div className="row">
               <div className="col-6">
-                <p className="card-text">{front}</p>
+                <div className="card-body border-right">{front}</div>
               </div>
 
               <div className="col-6">
-                <p className="card-text">{back}</p>
+                <div className="card-body border-left">{back}</div>
               </div>
             </div>
 
-            <div className="text-right">
+            <div className="text-right mb-1">
               <CardButtons id={id} handleDelete={handleDelete} />
             </div>
           </div>
@@ -36,7 +35,7 @@ function CardList({ cards, handleDelete }) {
   return (
     <div>
       <h2>Cards</h2>
-      <div className="card-deck">{displayCards}</div>
+      <div>{displayCards}</div>
     </div>
   );
 }

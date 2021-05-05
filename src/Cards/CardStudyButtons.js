@@ -6,6 +6,7 @@ function CardStudyButtons({ handleNext, handleFlip, nextButton }) {
       type="button"
       onClick={() => handleFlip()}
       className="btn btn-secondary mr-2"
+      style={{ maxWidth: "140px" }}
     >
       Flip
     </button>
@@ -15,6 +16,7 @@ function CardStudyButtons({ handleNext, handleFlip, nextButton }) {
       type="button"
       onClick={() => handleNext()}
       className="btn btn-primary"
+      style={{ maxWidth: "140px" }}
     >
       Next
     </button>
@@ -22,7 +24,7 @@ function CardStudyButtons({ handleNext, handleFlip, nextButton }) {
 
   return (
     <div
-      className="btn-group"
+      className="btn-group pl-2"
       role="group"
       aria-label="Study Card Buttons group"
     >

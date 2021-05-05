@@ -101,7 +101,7 @@ function DeckStudy() {
         </ol>
       </nav>
       <h1>{flashDeck.name}: Study</h1>
-      {displayResult}
+      <div style={{ marginTop: "30px" }}>{displayResult}</div>
     </div>
   );
 }
